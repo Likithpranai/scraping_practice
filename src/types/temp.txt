@@ -1,0 +1,444 @@
+{
+    [
+        {
+            "url": "https://www.openrice.com/en/hongkong/r-crab-fairy-causeway-bay-hong-kong-style-steam-hotpot-r709317",
+            "name": "蟹仙海鮮蒸碢大公館",
+            "address": "G/F & 1/F, Way On Commercial Building, 500 Jaffe Road, Causeway Bay 銅鑼灣謝斐道500號維安商業大廈地舖至1樓",
+            "secondaryName": "Crab Fairy",
+            "neighbourhood": "Causeway Bay",
+            "pricePoint": "$201-400",
+            "saved": "8385",
+            "rating": 4.5,
+            "ratedHappy": 336,
+            "ratedOk": 9,
+            "ratedUnhappy": 14,
+            "navigation": "2-min walk from Exit D4, Causeway Bay MTR Station",
+            "introduction": "The restaurant offers steam hot pot, accompanied by a variety of fresh seafood, among which the most attractive is the luxurious \"Seafood Set\", including Coral Grouper, Lobster, Abalone, Royal Clam, etc.",
+            "photoUrls": [
+                "https://static5.orstatic.com/userphoto3/photo/2P/25CT/0FA38C36F7F98549BC4B83tx.webp",
+                "https://static8.orstatic.com/userphoto3/photo/2O/247U/0F1ZSN2CEC811C5B31641Dtx.webp",
+                "https://static5.orstatic.com/userphoto3/photo/2T/28GD/0FW4JC62EFF02A332EAF38tx.webp",
+                "https://static6.orstatic.com/userphoto3/photo/2T/28GE/0FW4JPBBFDD933829A701Etx.webp",
+                "https://static7.orstatic.com/userphoto3/photo/2T/28F9/0FVWIM321EA889FBE48735tx.webp",
+                "https://static6.orstatic.com/userphoto3/photo/2T/28F9/0FVWIL9834A3F57C9A0322tx.webp",
+                "https://static7.orstatic.com/userphoto3/photo/2T/28F7/0FVW4E85FB457E3E7F8623tx.webp"
+            ],
+            "openingHours": {
+                "Mon - Sun": "12:00 - 00:00"
+            },
+            "otherInfo": {
+                "Online Reservation": true,
+                "Alcoholic Drinks": true,
+                "May Bring Your Own Wine": true,
+                "Cake-cutting": true,
+                "VIP Room": true,
+                "Phone Reservation": true,
+                "Reward Dining Points": true,
+                "Delivery": true,
+                "10% Service Charge": true
+            },
+            "paymentMethods": [
+                "Visa",
+                "Master",
+                "Cash"
+            ],
+            "recommendedDishes": [
+                "澳洲青年龍蝦",
+                "台灣九孔鮑魚",
+                "粥底",
+                "有機蔬菜籃",
+                "野生琵琶龍蝦",
+                "尊貴海鮮套餐",
+                "太平洋饅頭蟹",
+                "大西洋野生青口",
+                "蟹皇大元貝",
+                "秘製原隻南非乾鮑",
+                "越南大虎蝦",
+                "罕有藻食綠膏蟹",
+                "日本野生大赤蝦",
+                "韓國慶南珍珠蠔",
+                "加拿大野生海虎蝦",
+                "紐西蘭月亮貝",
+                "罕有大黃奄蟹",
+                "韓國釜山蠔",
+                "膏仔蟹",
+                "龍蝦"
+            ],
+            "openriceCategories": [
+                "Guangdong",
+                "Hong Kong Style",
+                "Steam Hotpot",
+                "Seafood Restaurant",
+                "Crab Specialty",
+                "Salt & Sugar Reduction Restaurant"
+            ]
+        },
+        {
+            "url": "https://www.openrice.com/en/hongkong/r-crazy-chicken-wan-chai-hong-kong-style-noodles-rice-noodles-r700202",
+            "name": "癡膠雞 (軒尼詩道)",
+            "address": "G/F, 254 Hennessy Road, Wan Chai 灣仔軒尼詩道254號地舖",
+            "secondaryName": "Crazy Chicken (Hennessy Road)",
+            "neighbourhood": "Wan Chai",
+            "pricePoint": "$101-200",
+            "saved": "18344",
+            "rating": 4.5,
+            "ratedHappy": 426,
+            "ratedOk": 20,
+            "ratedUnhappy": 4,
+            "navigation": "5-min walk from Exit A2, Wan Chai MTR Station",
+            "telephone": "35638180",
+            "photoUrls": [
+                "https://static5.orstatic.com/userphoto3/photo/2Q/25Q4/0FCPU81EE56B2EEF2EB5D1tx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2N/23FD/0EWDDKA901F93FB804D287tx.jpg",
+                "https://static8.orstatic.com/userphoto3/photo/2O/24LQ/0F4QLV6CA70DEE9ED9055Dtx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2P/252C/0F80PK05D7D683A8F5F312tx.jpg",
+                "https://static6.orstatic.com/userphoto3/photo/2T/28AC/0FUXMP7F394FA5B05580DAtx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2T/28AC/0FUXMO8765DFD49EC6EDAFtx.jpg",
+                "https://static8.orstatic.com/userphoto3/photo/2T/28AC/0FUXMN1240B21E0AF173DDtx.jpg",
+                "https://static7.orstatic.com/userphoto3/photo/2T/28AC/0FUXMM9B3BD317DF192BC8tx.jpg"
+            ],
+            "openingHours": {
+                "Mon - Sat": "11:00 - 21:00",
+                "Sun": "Closed",
+                "Public Holiday": "Closed"
+            },
+            "otherInfo": {
+                "Online Reservation": true,
+                "Alcoholic Drinks": true,
+                "May Bring Your Own Wine": true,
+                "Reward Dining Points": true,
+                "10% Service Charge": false
+            },
+            "paymentMethods": [
+                "Visa",
+                "Master",
+                "AlipayHK",
+                "Alipay",
+                "Cash",
+                "Octopus",
+                "WeChat Pay"
+            ],
+            "recommendedDishes": [
+                "金磚豆腐",
+                "手拍青瓜",
+                "蟹肉忌廉薯餅",
+                "招牌花膠雞米線",
+                "椰子雞米線",
+                "藥膳黃酒花膠雞米線",
+                "檸檬薏米水",
+                "胡椒豬肚雞米線",
+                "明太子釀雞翼",
+                "姬松茸竹笙花膠雞米線",
+                "蜜糖雞翼",
+                "蜜桃烏龍冷泡茶",
+                "椒鹽粟米",
+                "沙薑雞",
+                "羊肚菌花膠雞米線",
+                "沙薑雞濃湯米線",
+                "胡椒豬肚雞",
+                "招牌花膠雞濃湯米線",
+                "招牌花膠雞湯米線",
+                "柚子梳打"
+            ],
+            "openriceCategories": [
+                "Hong Kong Style",
+                "Noodles/Rice Noodles"
+            ]
+        },
+        {
+            "url": "https://www.openrice.com/en/hongkong/r-evvoke-jordan-hong-kong-style-r553455",
+            "name": "憶食尚臘味煲仔飯",
+            "address": "G/F, 22-24 Man Wun Street, Jordan 佐敦文匯街22-24號地下2-4號舖",
+            "secondaryName": "Evvoke",
+            "neighbourhood": "Jordan",
+            "pricePoint": "$201-400",
+            "saved": "18628",
+            "rating": 4.5,
+            "ratedHappy": 688,
+            "ratedOk": 19,
+            "ratedUnhappy": 10,
+            "navigation": "4-min walk from Exit A, Austin MTR Station",
+            "telephone": "35909933",
+            "introduction": "The owner of the restaurant is also lap-mei manufacturer. It has its own factory. All of the lap-mei does not contain any preservatives and chemicals. It uses the pork from Heyuan and Chongqing.",
+            "photoUrls": [
+                "https://static5.orstatic.com/userphoto3/photo/2Q/25VB/0FDQOSD0ABCBBF4D69CE81tx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2Q/25II/0FB7Q4901C12019D38E614tx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2Q/25KT/0FBO2G8060CBE3A4EF6398tx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2O/24KD/0F4GU8A53B4A58D7885721tx.jpg",
+                "https://static6.orstatic.com/userphoto3/photo/2T/28GU/0FW7Q9CC77CCD15A85F92Etx.jpg",
+                "https://static6.orstatic.com/userphoto3/photo/2T/289A/0FUQ55FA70101547D64F25tx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2T/289A/0FUQ545BB264DE994A8092tx.jpg",
+                "https://static7.orstatic.com/userphoto3/photo/2T/27ZT/0FSUOI2DA2A814F3AE7A2Etx.jpg"
+            ],
+            "openingHours": {
+                "Mon": "Closed",
+                "Tue - Sun": "12:00 - 22:00"
+            },
+            "otherInfo": {
+                "Online Reservation": true,
+                "Reward Dining Points": true,
+                "10% Service Charge": true
+            },
+            "paymentMethods": [
+                "Visa",
+                "Master",
+                "AlipayHK",
+                "Alipay",
+                "Cash",
+                "UnionPay"
+            ],
+            "recommendedDishes": [
+                "川味臘味煲仔飯",
+                "椒鹽一口骨",
+                "港式臘味煲仔飯",
+                "廣式臘味煲仔飯",
+                "甜蜜咕嚕肉",
+                "芥菜排骨煲",
+                "瑤柱蝦米雜菜煲",
+                "特色臘味煲仔飯",
+                "上湯菜心",
+                "黑松露雞煲",
+                "玄米茶",
+                "菜心",
+                "川椒麻辣雞煲",
+                "手工黃金麵",
+                "咕嚕肉",
+                "臘味煲仔飯",
+                "鐵觀音",
+                "瑤柱蛋白海皇炒飯",
+                "上湯娃娃菜",
+                "香菇滑雞煲仔飯",
+                "金銀絲拌銀針",
+                "麻辣川味臘腸炒蛋",
+                "川味臘腸炒蛋",
+                "籠仔荷葉蒸土雞飯",
+                "清蒸川味臘腸",
+                "板鴨蘿蔔煲",
+                "御髪膳粥",
+                "鮮醃鯧魚",
+                "川味臘腸",
+                "霸王蔥油雞"
+            ],
+            "openriceCategories": [
+                "Guangdong",
+                "Hong Kong Style"
+            ]
+        },
+        {
+            "url": "https://www.openrice.com/en/hongkong/r-city-of-darkness-tin-hau-hong-kong-style-hot-pot-r742214",
+            "name": "叁不館",
+            "address": "7/F, SL GINZA, 68 Electric Road, Tin Hau 天后電氣道68號樹林銀座7樓",
+            "secondaryName": "City of Darkness",
+            "neighbourhood": "Tin Hau",
+            "pricePoint": "$201-400",
+            "saved": "13645",
+            "rating": 4.5,
+            "ratedHappy": 654,
+            "ratedOk": 5,
+            "ratedUnhappy": 1,
+            "navigation": "2-min walk from Exit A2, Tin Hau MTR Station",
+            "telephone": "93649678",
+            "introduction": "It is the secondary line of the Sheep and Pig restaurant. It uses fresh ingredients such as different beef cuts and imported sashimi to serve local style hot pot. The vintage design of ancient... continue reading",
+            "photoUrls": [
+                "https://static5.orstatic.com/userphoto3/photo/2Q/25Q6/0FCQ4GEB02267D9E382789tx.jpg",
+                "https://static8.orstatic.com/userphoto3/photo/2Q/25Q6/0FCQ4FF4878BB84280C13Ctx.jpg",
+                "https://static6.orstatic.com/userphoto3/photo/2Q/25PD/0FCKDT2BFDDBB6423AFC73tx.jpg",
+                "https://static6.orstatic.com/userphoto3/photo/2Q/25ZI/0FEKH96B2CB9813CFAF3E2tx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2T/2884/0FUHSOCFAAB74B04DB07B8tx.jpg",
+                "https://static8.orstatic.com/userphoto3/photo/2T/2884/0FUHSNE565267E31B13C3Ctx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2T/2884/0FUHS46A46C1D3E1180D86tx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2T/2884/0FUHSKE455EC01F9D49E64tx.jpg"
+            ],
+            "openingHours": {
+                "Mon - Sun": "18:00 - 00:00",
+                "Public Holiday": "18:00 - 00:00",
+                "Public Holiday Eve": "18:00 - 00:00"
+            },
+            "otherInfo": {
+                "Online Reservation": true,
+                "Wi-Fi": true,
+                "Alcoholic Drinks": true,
+                "May Bring Your Own Wine": true,
+                "VIP Room": true,
+                "Phone Reservation": true,
+                "Reward Dining Points": true,
+                "Delivery": true,
+                "10% Service Charge": true,
+                "Sustainable Seafood": true
+            },
+            "paymentMethods": [
+                "Visa",
+                "Master",
+                "AlipayHK",
+                "Alipay",
+                "Cash",
+                "Octopus",
+                "AE",
+                "UnionPay",
+                "Apple Pay",
+                "Google Pay",
+                "WeChat Pay"
+            ],
+            "recommendedDishes": [
+                "頂級安格斯牛頸脊",
+                "手打五寶丸",
+                "牛魔王拼盤",
+                "手切封門柳",
+                "新鮮炸響鈴",
+                "咯咯雞花膠湯",
+                "白鱔片",
+                "雜菜拼盤",
+                "竹蔗茅根海底椰",
+                "西班牙黑毛豬",
+                "自家製四拼餃",
+                "蘇格蘭蟶子",
+                "珊瑚蚌",
+                "醬油",
+                "日本扇貝",
+                "手打海中蝦滑",
+                "今晚卜卜蜆鍋",
+                "紫菜炸響鈴",
+                "莫生氣椰椰雞湯",
+                "蝦膠油炸鬼",
+                "黃金鮮魷",
+                "椒鹽粟米",
+                "皇帝菜",
+                "頂級安格斯牛頸脊（例牌）",
+                "邪惡炸響鈴配自家炸魚皮",
+                "咯咯花膠湯",
+                "牛脷托",
+                "招牌午餐肉餃",
+                "蒙古羊肉片",
+                "自製炸魚皮"
+            ],
+            "openriceCategories": [
+                "Guangdong",
+                "Hong Kong Style",
+                "Hot Pot",
+                "Stir-Fry"
+            ]
+        },
+        {
+            "url": "https://www.openrice.com/en/hongkong/r-yum-hotpot-tsim-sha-tsui-hong-kong-style-chicken-hot-pot-r707888",
+            "name": "味火鍋 (雅仕洋樓)",
+            "address": "1/F & Shop D, G/F, Ashley Building, 14 Ashley Road, Tsim Sha Tsui 尖沙咀亞士厘道12-14號雅仕洋樓地下D號舖及1樓",
+            "secondaryName": "Yum Hotpot (Ashley Building)",
+            "neighbourhood": "Tsim Sha Tsui",
+            "pricePoint": "$201-400",
+            "saved": "25072",
+            "rating": 4.5,
+            "ratedHappy": 218,
+            "ratedOk": 11,
+            "ratedUnhappy": 5,
+            "navigation": "2-min walk from Exit A, Tsim Sha Tsui / East Tsim Sha Tsui MTR Station",
+            "introduction": "It is operated in family based and offers semi-buffet hotpot. There are ten choices of soup base, including maws, drunk chicken, and seafood with soy milk, etc. You can choose different seafood... continue reading",
+            "photoUrls": [
+                "https://static5.orstatic.com/userphoto3/photo/2Q/25KI/0FBLTSEC9ED8365DF8919Btx.jpg",
+                "https://static7.orstatic.com/userphoto3/photo/2P/24RS/0F5XOI994663DBFCF5D0DDtx.jpg",
+                "https://static5.orstatic.com/userphoto3/photo/2O/24GR/0F3R444D631D578F1EE84Ftx.jpg",
+                "https://static7.orstatic.com/userphoto3/photo/2P/24PY/0F5KKU3E449B9973543A55tx.jpg",
+                "https://static6.orstatic.com/userphoto3/photo/2R/26SD/0FK9Q5417DE17EE68FC141tx.jpg",
+                "https://static8.orstatic.com/userphoto3/photo/2R/26SG/0FKAEN6EC159B5C89AA2BFtx.jpg",
+                "https://static7.orstatic.com/userphoto3/photo/2R/26BC/0FGWQQ6DCF96A3D5245C60tx.jpg",
+                "https://static8.orstatic.com/userphoto3/photo/2Q/25TA/0FDCCZ27B04259F89580A9tx.jpg"
+            ],
+            "openingHours": {
+                "Mon - Sun": "18:00 - 01:00"
+            },
+            "otherInfo": {
+                "Online Reservation": true,
+                "Wi-Fi": true,
+                "Alcoholic Drinks": true,
+                "May Bring Your Own Wine": true,
+                "VIP Room": true,
+                "Phone Reservation": true,
+                "Reward Dining Points": true,
+                "10% Service Charge": true
+            },
+            "paymentMethods": [
+                "Visa",
+                "Master",
+                "AlipayHK",
+                "Alipay",
+                "Cash",
+                "UnionPay",
+                "Apple Pay",
+                "Google Pay",
+                "WeChat Pay"
+            ],
+            "recommendedDishes": [
+                "芝士焗龍蝦",
+                "海鮮拼盤",
+                "美國安格斯牛肉拼盤",
+                "火鍋",
+                "牛肉拼盤",
+                "芝士焗生蠔",
+                "時令海鮮拼盤",
+                "酸菜魚",
+                "芝士焗波士頓龍蝦"
+            ],
+            "openriceCategories": [
+                "Hong Kong Style",
+                "Hot Pot",
+                "Chicken Hot Pot"
+            ]
+        },
+    ]
+}
+
+Enrich the above 5 restaurants to the format below, if the information is not yet available, search online for them.
+You should return a json list of objects with following format.
+
+{
+  "name": "AMMO",
+  "local_name": "AMMO",
+  "type": "restaurants" | "cafes" | "bars" | "drinks",
+  "hidden_gem_score": 60,
+  "text_embedding": "A 56-seat restaurant at Asia Society Hong Kong specializing in Chef Jack Law's unique blend of Italian and Japanese cuisines. The venue features impressive Art Deco interiors with a futuristic twist designed by Joyce Wang, offering a la carte menus, three-course lunch selections, and an Omakase tasting menu for dinner.",
+  "local_tips": "The weekend afternoon tea is less crowded than other luxury hotels. Try their exclusive Spanish craft beer that can't be found elsewhere in Hong Kong. The outdoor terrace is perfect during cooler months.",
+  "tags_type": {
+   "Food": 70,
+   "Art & Culture": 20,
+   "History": 5,
+   "Nature": 0,
+   "Leisure": 5,
+   "Adventure": 0,
+   "Shopping": 0,
+   "Entertainment": 0,
+   "Photography": 0,
+   "Sports": 0,
+   "Hidden Gems": 0,
+   "Wellness": 0,
+   "Nightlife": 0,
+   "Educational": 0
+  },
+  "tags_budget": {
+   "Free": 0,
+   "Budget friendly": 0,
+   "Moderately priced": 0,
+   "High-end": 1,
+   "Luxury": 0
+  },
+  "tags_group": {
+   "Date": 40,
+   "Friends": 20,
+   "Family": 10,
+   "Colleagues": 15,
+   "Business": 15
+  },
+  "recognition": {
+   "Whitewall.art": "2025 Best Hong Kong Restaurants & Bars",
+   "TimeOut": "Best Fusion Restaurant",
+   "Others": "Acclaimed for Joyce Wang's interior design"
+  },
+}
+
+IMPORTANT RULES:
+    1. For "hidden_gem_score": Use a scale from 0-100 where 0=extremely popular tourist spot, 100=only locals know about it
+    4. For "text_embedding": Write 2-3 sentences that capture the essence, history, unique features, local tips, and signature items of the place
+    5. Ensure all information is ACCURATE and UP-TO-DATE
+    6. Focus on places that are CURRENTLY OPERATING (not closed or historical)
+    9. For "recognition": Use specific source names (e.g., "Michelin Guide", "TimeOut", "OpenRice") and keep descriptions brief. Use "Others" for general recognitions without specific sources
+    10. For "tags_type": Ensure the percentages add up to 100 and accurately reflect the spot's primary characteristics
+    11. For "tags_budget": Only ONE budget category should be set to 1, all others should be 0
+    12. For "tags_group": Distribute percentages to reflect which groups the spot is most suitable for (total should be 100)

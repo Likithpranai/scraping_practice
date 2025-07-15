@@ -1,0 +1,423 @@
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+import { Page, Browser } from 'puppeteer';
+
+puppeteer.use(StealthPlugin());
+
+interface EventDetail {
+  title: string;
+  description?: string;
+  date?: string;
+  location?: string;
+  price?: string;
+  organizer?: string;
+  url: string;
+  additionalDetails?: Record<string, string>;
+}
+
+class SiteContentService {
+  private url = 'https://www.discoverhongkong.com/eng/what-s-new/events.html'; 
+
+  /**
+   * Simulates human-like behavior on a page
+   */
+  private async simulateHumanBehavior(page: Page): Promise<void> {
+    // Wait for a random amount of time on page load
+    await new Promise(r => setTimeout(r, Math.random() * 3000 + 2000)); // 2-5 seconds
+
+    // Simulate some random mouse movements
+    for (let i = 0; i < 5; i++) {
+      await page.mouse.move(
+        Math.random() * 1000, // x
+        Math.random() * 1000  // y
+      );
+      await new Promise(r => setTimeout(r, Math.random() * 500 + 200)); // short pause
+    }
+
+    // More human-like scrolling using mouse wheel
+    const scrollHeight = await page.evaluate(() => document.body.scrollHeight);
+    let currentPosition = 0;
+    while (currentPosition < scrollHeight) {
+        const scrollDistance = Math.floor(Math.random() * 400) + 100; // scroll 100-500px
+        await page.mouse.wheel({ deltaY: scrollDistance });
+        currentPosition += scrollDistance;
+        await new Promise(r => setTimeout(r, Math.random() * 1000 + 500)); // wait 0.5-1.5s between scrolls
+    }
+  }
+
+  /**
+   * Extract event details from an individual event page
+   */
+  private async extractEventDetails(page: Page, url: string): Promise<EventDetail> {
+    console.log(`Extracting details from: ${url}`);
+    
+    try {
+      await page.goto(url, { waitUntil: 'networkidle2' });
+      await this.simulateHumanBehavior(page);
+      
+      // Extract event details
+      const eventDetail = await page.evaluate(() => {
+        const detail: Record<string, string> = {};
+        
+        // Get the title from the h2 element
+        const title = document.querySelector('h2')?.textContent?.trim() || document.title;
+        
+        // Get the description - typically in paragraphs or div elements with content
+        const descriptionElements = document.querySelectorAll('.dynamic-page-content p, .event-description, .card-text');
+        const description = Array.from(descriptionElements)
+          .map(el => el.textContent?.trim())
+          .filter(Boolean)
+          .join('\n');
+        
+        if (description) {
+          detail['Description'] = description;
+        }
+        
+        // Target the specific event details container
+        const detailsContainer = document.querySelector('.dynamic-page-details__listing');
+        if (detailsContainer) {
+          const detailItems = detailsContainer.querySelectorAll('.dynamic-page-details__item');
+          detailItems.forEach(item => {
+            const label = item.querySelector('.dynamic-page-details__label')?.textContent?.trim();
+            if (label) {
+              // Extract text content for most fields
+              const valueElement = item.querySelector('.dynamic-page-details__value');
+              if (valueElement) {
+                // Special handling for website field - extract the href from the anchor tag
+                if (label.toLowerCase().includes('website')) {
+                  const anchor = valueElement.querySelector('a');
+                  detail[label] = anchor ? anchor.href : valueElement.textContent?.trim() || '';
+                } else {
+                  const text = valueElement.textContent?.trim() || '';
+                  // Only store if text is reasonably sized (not entire page content)
+                  if (text.length < 1000) {
+                    detail[label] = text;
+                  }
+                }
+              }
+            }
+          });
+        }
+        
+        // Fallback extraction for various fields if not found in the details container
+        // Try to find date information
+        if (!detail['Date']) {
+          const dateSelectors = [
+            '.event-date',
+            '.date-info',
+            'p',
+            'div'
+          ];
+          
+          for (const selector of dateSelectors) {
+            const elements = document.querySelectorAll(selector);
+            for (const element of Array.from(elements)) {
+              const text = element.textContent?.trim() || '';
+              // Check if the text contains date-related keywords
+              if ((selector === 'p' || selector === 'div')) {
+                if (!text.toLowerCase().includes('date') && 
+                    !text.toLowerCase().includes('time')) {
+                  continue;
+                }
+                // Skip very long text blocks that are likely not dates
+                if (text.length > 300) continue;
+              }
+              if (text) {
+                // Extract just the date, removing prefix if present
+                const dateText = text.replace(/^Date:\s*/i, '');
+                // Only use if it's a reasonable length for a date
+                if (dateText.length < 200) {
+                  detail['Date'] = dateText;
+                  break;
+                }
+              }
+            }
+            if (detail['Date']) break;
+          }
+        }
+        
+        // Try to find venue/location information
+        if (!detail['Venue']) {
+          const venueSelectors = [
+            '.event-venue',
+            '.venue-info',
+            'p',
+            'div'
+          ];
+          
+          for (const selector of venueSelectors) {
+            const elements = document.querySelectorAll(selector);
+            for (const element of Array.from(elements)) {
+              const text = element.textContent?.trim() || '';
+              // Check if the text contains venue-related keywords
+              if ((selector === 'p' || selector === 'div')) {
+                if (!text.toLowerCase().includes('venue') && 
+                    !text.toLowerCase().includes('location')) {
+                  continue;
+                }
+                // Skip very long text blocks that are likely not venues
+                if (text.length > 300) continue;
+              }
+              if (text) {
+                // Extract just the venue, removing prefix if present
+                const venueText = text.replace(/^(Venue|Location):\s*/i, '');
+                // Only use if it's a reasonable length for a venue
+                if (venueText.length < 200) {
+                  detail['Venue'] = venueText;
+                  break;
+                }
+              }
+            }
+            if (detail['Venue']) break;
+          }
+        }
+        
+        // Try to find price information
+        if (!detail['Price']) {
+          const priceSelectors = [
+            '.event-price',
+            '.price-info',
+            'p',
+            'div'
+          ];
+          
+          for (const selector of priceSelectors) {
+            const elements = document.querySelectorAll(selector);
+            for (const element of Array.from(elements)) {
+              const text = element.textContent?.trim() || '';
+              // Check if the text contains price-related keywords
+              if ((selector === 'p' || selector === 'div')) {
+                if (!text.toLowerCase().includes('price') && 
+                    !text.toLowerCase().includes('fee') &&
+                    !text.toLowerCase().includes('ticket') &&
+                    !text.toLowerCase().includes('admission')) {
+                  continue;
+                }
+                // Skip very long text blocks that are likely not prices
+                if (text.length > 300) continue;
+              }
+              if (text) {
+                // Extract just the price, removing prefix if present
+                const priceText = text.replace(/^(Price|Fee|Ticket|Admission):\s*/i, '');
+                // Only use if it's a reasonable length for a price
+                if (priceText.length < 200) {
+                  detail['Price'] = priceText;
+                  break;
+                }
+              }
+            }
+            if (detail['Price']) break;
+          }
+        }
+        
+        // Try to find organizer information
+        if (!detail['Organiser'] && !detail['Organizer']) {
+          const organizerSelectors = [
+            '.organizer-info',
+            '.event-organizer',
+            'p',
+            'div'
+          ];
+          
+          for (const selector of organizerSelectors) {
+            const elements = document.querySelectorAll(selector);
+            for (const element of Array.from(elements)) {
+              const text = element.textContent?.trim() || '';
+              // Check if the text contains organizer-related keywords
+              if ((selector === 'p' || selector === 'div')) {
+                if (!text.toLowerCase().includes('organiser') && 
+                    !text.toLowerCase().includes('organizer')) {
+                  continue;
+                }
+                // Skip very long text blocks that are likely not organizers
+                if (text.length > 300) continue;
+              }
+              if (text) {
+                // Extract just the organizer, removing prefix if present
+                const organizerText = text.replace(/^(Organiser|Organizer):\s*/i, '');
+                // Only use if it's a reasonable length for an organizer
+                if (organizerText.length < 200) {
+                  detail['Organiser'] = organizerText;
+                  break;
+                }
+              }
+            }
+            if (detail['Organiser'] || detail['Organizer']) break;
+          }
+        }
+        
+        // Try to find website information
+        if (!detail['Website']) {
+          const websiteSelectors = [
+            'a[href*="http"]',
+            '.event-website',
+            '.website-link'
+          ];
+          
+          // First try specific website selectors
+          for (const selector of websiteSelectors) {
+            const elements = document.querySelectorAll(selector);
+            for (const element of Array.from(elements)) {
+              if (element.getAttribute('href')) {
+                detail['Website'] = element.getAttribute('href') || '';
+                break;
+              }
+            }
+            if (detail['Website']) break;
+          }
+          
+          // If no website found, look for links in paragraphs containing 'website'
+          if (!detail['Website']) {
+            const paragraphs = document.querySelectorAll('p, div');
+            for (const p of Array.from(paragraphs)) {
+              if (p.textContent?.toLowerCase().includes('website')) {
+                const link = p.querySelector('a');
+                if (link && link.getAttribute('href')) {
+                  detail['Website'] = link.getAttribute('href') || '';
+                  break;
+                }
+              }
+            }
+          }
+        }
+        
+        return { title, ...detail };
+      });
+      
+      return {
+        title: eventDetail.title || 'Unknown Event',
+        description: eventDetail['Description'],
+        date: eventDetail['Date'],
+        location: eventDetail['Venue'],
+        price: eventDetail['Price'] || eventDetail['Ticket Price'] || eventDetail['Fee'],
+        organizer: eventDetail['Organiser'] || eventDetail['Organizer'],
+        url: url,
+        additionalDetails: eventDetail as Record<string, string>
+      };
+      
+    } catch (error) {
+      console.error(`Failed to extract details from ${url}:`, error);
+      return {
+        title: 'Error extracting event',
+        url: url,
+        additionalDetails: { error: (error as Error).message }
+      };
+    }
+  }
+
+  /**
+   * Get all event links from the main page
+   */
+  private async getEventLinks(page: Page): Promise<string[]> {
+    return await page.evaluate(() => {
+      // Target the specific list-content div that contains all events
+      const listContent = document.querySelector('.list-content');
+      if (!listContent) return [];
+      
+      // Find all event card items
+      const eventCards = listContent.querySelectorAll('.list-item');
+      
+      // Extract links from each card
+      const links = Array.from(eventCards)
+        .map(card => {
+          const linkElement = card.querySelector('.card-img-wrap a');
+          return linkElement ? (linkElement as HTMLAnchorElement).href : null;
+        })
+        .filter((href): href is string => !!href && !href.includes('#') && !href.includes('javascript:'));
+      
+      return links;
+    });
+  }
+
+  /**
+   * Get content from the main events page and extract details from individual event pages
+   */
+  public async getSiteContent(): Promise<{ events: EventDetail[] }> {
+    // Using a proxy is highly recommended to avoid IP-based blocking for sites like Klook.
+    // You can get proxies from services like Bright Data, Oxylabs, or Smartproxy.
+    const proxyServer = ''; // e.g. 'http://user:pass@host:port'
+    const browser = await puppeteer.launch({
+      headless: false,
+      // Use the system's Chrome installation
+      executablePath: process.platform === 'darwin' ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' : 
+                     process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : 
+                     '/usr/bin/google-chrome',
+      // The --no-sandbox flag is often necessary when running in a containerized environment.
+      // The --disable-blink-features=AutomationControlled flag helps to avoid detection by some bot-detection scripts.
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-blink-features=AutomationControlled',
+        ...(proxyServer ? [`--proxy-server=${proxyServer}`] : []),
+      ],
+    });
+
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36');
+
+    try {
+      console.log(`Navigating to main page: ${this.url}`);
+      await page.goto(this.url, { waitUntil: 'networkidle2' });
+      await this.simulateHumanBehavior(page);
+      
+      // Get all event links from the main page
+      const eventLinks = await this.getEventLinks(page);
+      console.log(`Found ${eventLinks.length} event links`);
+      
+      // Array to store all event details
+      const events: EventDetail[] = [];
+      
+      // Process up to 15 events
+      const maxEvents = Math.min(15, eventLinks.length);
+      console.log(`Processing ${maxEvents} events`);
+      
+      for (let i = 0; i < maxEvents; i++) {
+        console.log(`Processing event ${i + 1}/${maxEvents}: ${eventLinks[i]}`);
+        
+        try {
+          // Special handling for events 7-11 to ensure we at least get name and date
+          if (i >= 6 && i <= 10) { // 0-indexed, so 7-11 becomes 6-10
+            console.log(`Special handling for event ${i + 1} (in range 7-11)`);
+            const eventDetail = await this.extractEventDetails(page, eventLinks[i]);
+            
+            // Ensure we have at least a title and attempt to get a date
+            if (eventDetail.title && eventDetail.title !== 'Unknown Event' && eventDetail.title !== 'Error extracting event') {
+              events.push(eventDetail);
+              console.log(`Successfully extracted event ${i + 1}: ${eventDetail.title}`);
+            } else {
+              console.log(`Skipping event ${i + 1} due to missing or invalid title`);
+            }
+          } else {
+            // Normal handling for other events
+            const eventDetail = await this.extractEventDetails(page, eventLinks[i]);
+            
+            // Only add events with valid titles
+            if (eventDetail.title && eventDetail.title !== 'Unknown Event' && eventDetail.title !== 'Error extracting event') {
+              events.push(eventDetail);
+              console.log(`Successfully extracted event ${i + 1}: ${eventDetail.title}`);
+            } else {
+              console.log(`Skipping event ${i + 1} due to missing or invalid title`);
+            }
+          }
+        } catch (error) {
+          console.error(`Error processing event ${i + 1}:`, error);
+        }
+        
+        // Add a small delay between requests to avoid overloading the server
+        await new Promise(r => setTimeout(r, 1000 + Math.random() * 2000));
+      }
+      
+      await browser.close();
+      console.log(`Finished processing events. Total: ${events.length}`);
+      return { events };
+      
+    } catch (error) {
+      console.error('Error in getSiteContent:', error);
+      await browser.close();
+      return { events: [] };
+    }
+  }
+}
+
+export default new SiteContentService();
