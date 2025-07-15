@@ -142,7 +142,7 @@ class EventFoodService {
     return events;
   }
 
-  private async getEventDetails(page: Page, url: string): Promise<{about: string, fullLocation: string}> {
+  private async getEventDetails(page: Page, url: string): Promise<{about: string, fullLocation: string, fullDate: string}> {
     try {
       console.log(`  Navigating to event page: ${url}`);
       await page.goto(url, { waitUntil: 'networkidle' });
@@ -150,7 +150,7 @@ class EventFoodService {
       console.log(`  Simulating human behavior on event page...`);
       await this.simulateHumanBehavior(page);
       
-      console.log(`  Extracting about section and location information...`);
+      console.log(`  Extracting about section, location, and date information...`);
       const details = await page.evaluate(() => {
         // Extract about section
         const aboutSection = document.querySelector('.event-details__about');
@@ -190,7 +190,17 @@ class EventFoodService {
           }
         }
         
-        return { aboutText, fullLocation };
+        // Extract full date information
+        let fullDate = '';
+        const dateInfo = document.querySelector('.date-info');
+        if (dateInfo) {
+          const dateTimeElement = dateInfo.querySelector('.date-info__full-datetime');
+          if (dateTimeElement) {
+            fullDate = dateTimeElement.textContent?.trim() || '';
+          }
+        }
+        
+        return { aboutText, fullLocation, fullDate };
       });
       
       if (details.aboutText) {
@@ -205,10 +215,16 @@ class EventFoodService {
         console.log(`  No detailed location information found`);
       }
       
-      return { about: details.aboutText, fullLocation: details.fullLocation };
+      if (details.fullDate) {
+        console.log(`  Successfully extracted full date: ${details.fullDate}`);
+      } else {
+        console.log(`  No detailed date information found`);
+      }
+      
+      return { about: details.aboutText, fullLocation: details.fullLocation, fullDate: details.fullDate };
     } catch (error) {
       console.error(`  Error getting event details from ${url}:`, error);
-      return { about: '', fullLocation: '' };
+      return { about: '', fullLocation: '', fullDate: '' };
     }
   }
 
@@ -248,6 +264,11 @@ class EventFoodService {
           // Update location with more detailed information if available
           if (details.fullLocation) {
             event.location = details.fullLocation;
+          }
+          
+          // Update date with more accurate information if available
+          if (details.fullDate) {
+            event.date = details.fullDate;
           }
           
           console.log(`  → About section length: ${details.about.length} characters`);
