@@ -12,7 +12,7 @@ interface EventDetail {
 }
 
 class EventFoodService {
-  private baseUrl = 'https://www.eventbrite.hk/d/hong-kong-sar/food-and-drink--events/';
+  public baseUrl = 'https://www.eventbrite.hk/d/hong-kong-sar/food-and-drink--events/';
 
   private async simulateHumanBehavior(page: Page): Promise<void> {
     await new Promise(r => setTimeout(r, Math.random() * 3000 + 2000));
