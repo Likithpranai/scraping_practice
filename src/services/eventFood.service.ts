@@ -2,7 +2,7 @@ import { chromium, Page, Browser, BrowserContext } from 'playwright';
 
 interface EventDetail {
   name: string;
-  date: string;
+  dateTime: string;
   location: string;
   price: string;
   status?: string;
@@ -54,6 +54,9 @@ class EventFoodService {
       const eventCards = document.querySelectorAll('div[class*="event-card"]');
       console.log(`Found ${eventCards.length} event cards`);
       
+      // Keep track of URLs to avoid duplicates
+      const processedUrls = new Set();
+      
       eventCards.forEach((card, index) => {
         try {
           console.log(`Processing card ${index + 1}...`);
@@ -62,13 +65,19 @@ class EventFoodService {
           const linkElement = card.querySelector('a.event-card-link');
           const url = linkElement?.getAttribute('href') || '';
           
+          // Skip if we've already processed this URL
+          if (processedUrls.has(url)) {
+            console.log(`Skipping duplicate event with URL: ${url}`);
+            return;
+          }
+          
           // Get the name from h3
           const nameElement = card.querySelector('h3');
           const name = nameElement?.textContent?.trim() || '';
           
           // Get all paragraph elements that might contain date and location
           const paragraphs = card.querySelectorAll('p');
-          let date = '';
+          let dateTime = '';
           let location = '';
           
           // Loop through paragraphs to find date and location
@@ -82,18 +91,18 @@ class EventFoodService {
                   text.includes('Mon') || text.includes('Tue') || text.includes('Wed') || 
                   text.includes('Thu') || text.includes('Fri') || text.includes('Sat') || 
                   text.includes('Sun'))) {
-                date = text;
+                dateTime = text;
               } 
               // If it's the second paragraph, it's likely the location
               else if (i === 1) {
                 location = text;
               }
               // If we haven't found a date yet and this looks like one
-              else if (!date && (text.includes(',') || /\d+/.test(text) || text.includes(':') || 
+              else if (!dateTime && (text.includes(',') || /\d+/.test(text) || text.includes(':') || 
                       text.includes('Mon') || text.includes('Tue') || text.includes('Wed') || 
                       text.includes('Thu') || text.includes('Fri') || text.includes('Sat') || 
                       text.includes('Sun'))) {
-                date = text;
+                dateTime = text;
               }
               // If we haven't found a location yet and this doesn't look like a date
               else if (!location && !text.includes(':') && !/\d+/.test(text)) {
@@ -116,9 +125,12 @@ class EventFoodService {
           
           // Check if we have enough information to add this event
           if (name && url) {
+            // Add URL to processed set to avoid duplicates
+            processedUrls.add(url);
+            
             events.push({
               name,
-              date,
+              dateTime,
               location,
               price,
               status,
@@ -126,7 +138,7 @@ class EventFoodService {
               imageUrl,
               about: ''
             });
-            console.log(`Added event ${index + 1}: ${name} | Date: ${date} | Location: ${location}`);
+            console.log(`Added event ${index + 1}: ${name} | Date & Time: ${dateTime} | Location: ${location}`);
           } else {
             console.log(`Skipped event ${index + 1} due to missing name or URL`);
           }
@@ -190,13 +202,41 @@ class EventFoodService {
           }
         }
         
-        // Extract full date information
+        // Extract full date information using multiple strategies
         let fullDate = '';
+        
+        // Strategy 1: Try the specific date-info element first
         const dateInfo = document.querySelector('.date-info');
         if (dateInfo) {
           const dateTimeElement = dateInfo.querySelector('.date-info__full-datetime');
           if (dateTimeElement) {
             fullDate = dateTimeElement.textContent?.trim() || '';
+          }
+        }
+        
+        // Strategy 2: Try the specific Typography element for date
+        if (!fullDate) {
+          const dateTypography = document.querySelector('p.Typography_root__487rx.Typography_body-md__487rx.event-card__clamp-line--one');
+          if (dateTypography) {
+            fullDate = dateTypography.textContent?.trim() || '';
+          }
+        }
+        
+        // Strategy 3: Look for any element containing the word 'Date'
+        if (!fullDate) {
+          // Get all text nodes in the document
+          const allElements = document.querySelectorAll('*');
+          for (let i = 0; i < allElements.length; i++) {
+            const element = allElements[i];
+            const text = element.textContent || '';
+            if (text.includes('Date') || text.includes('date')) {
+              // Found an element with 'Date' in it, extract the content
+              const dateMatch = text.match(/Date[s]?[:\s]+(.*?)(?:(?:\.|$|Time|Location))/i);
+              if (dateMatch && dateMatch[1]) {
+                fullDate = dateMatch[1].trim();
+                break;
+              }
+            }
           }
         }
         
@@ -266,9 +306,9 @@ class EventFoodService {
             event.location = details.fullLocation;
           }
           
-          // Update date with more accurate information if available
+          // Update dateTime with more accurate information if available
           if (details.fullDate) {
-            event.date = details.fullDate;
+            event.dateTime = details.fullDate;
           }
           
           console.log(`  → About section length: ${details.about.length} characters`);
@@ -307,6 +347,29 @@ class EventFoodService {
     
     console.log(`\n===== SCRAPING COMPLETE =====`);
     console.log(`Total events scraped: ${allEvents.length}`);
+    return allEvents;
+  }
+  
+  public async scrapeAdditionalPages(pageNumbers: number[]): Promise<EventDetail[]> {
+    console.log(`Starting to scrape ${pageNumbers.length} additional page(s) from Eventbrite...`);
+    let allEvents: EventDetail[] = [];
+    
+    for (let i = 0; i < pageNumbers.length; i++) {
+      const pageNumber = pageNumbers[i];
+      console.log(`\n===== SCRAPING PAGE ${pageNumber} (${i + 1}/${pageNumbers.length}) =====`);
+      const events = await this.scrapeEventsFromPage(pageNumber);
+      allEvents = [...allEvents, ...events];
+      console.log(`Added ${events.length} events from page ${pageNumber}. Total events so far: ${allEvents.length}`);
+      
+      if (i < pageNumbers.length - 1) {
+        const waitTime = Math.floor(Math.random() * 5000 + 3000);
+        console.log(`Waiting ${waitTime}ms before scraping next page...`);
+        await new Promise(r => setTimeout(r, waitTime));
+      }
+    }
+    
+    console.log(`\n===== ADDITIONAL SCRAPING COMPLETE =====`);
+    console.log(`Total additional events scraped: ${allEvents.length}`);
     return allEvents;
   }
 }
