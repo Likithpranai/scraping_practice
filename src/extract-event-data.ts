@@ -14,6 +14,7 @@ if (!fs.existsSync(dataDir)) {
 interface EventData {
   name: string;
   tags: string[];
+  imageUrl: string;
 }
 
 /**
@@ -57,15 +58,25 @@ async function extractEventData(): Promise<void> {
         const eventBoxes = document.querySelectorAll('.cw-eventBox');
         console.log(`Found ${eventBoxes.length} event boxes on the page`);
         
-        const eventDataList: Array<{name: string, tags: string[]}> = [];
+        const eventDataList: Array<{name: string, tags: string[], imageUrl: string}> = [];
         
         eventBoxes.forEach(box => {
           try {
             // Extract name from img alt attribute
             const img = box.querySelector('img[src*="shows.cityline.com/images"]');
             let name = '';
+            let imageUrl = '';
+            
             if (img) {
               name = img.getAttribute('alt') || '';
+              // Extract image URL
+              imageUrl = img.getAttribute('src') || '';
+              
+              // Clean up the image URL if needed
+              if (imageUrl.includes('?')) {
+                // Remove query parameters to get the original image
+                imageUrl = imageUrl.split('?')[0];
+              }
             }
             
             // Extract tags - even if they're in a hidden div
@@ -84,8 +95,8 @@ async function extractEventData(): Promise<void> {
             
             // Only add if we have a name
             if (name) {
-              eventDataList.push({ name, tags });
-              console.log(`Found event: ${name} with ${tags.length} tags`);
+              eventDataList.push({ name, tags, imageUrl });
+              console.log(`Found event: ${name} with ${tags.length} tags and image URL`);
             }
           } catch (error) {
             // Ignore errors for individual cards
@@ -111,14 +122,12 @@ async function extractEventData(): Promise<void> {
     let allEventData: EventData[] = [];
     let previousEventCount = 0;
     let scrollAttempts = 0;
-    const maxScrollAttempts = 20; // Limit scrolling to prevent infinite loops
+    const maxScrollAttempts = 20; 
     
-    // Initial extraction
     let currentEventData = await extractCurrentEventData();
     allEventData = [...currentEventData];
     console.log(`Found ${allEventData.length} events initially`);
     
-    // Scroll and extract more events
     while (scrollAttempts < maxScrollAttempts) {
       // Scroll down to load more content
       const hasScrolled = await scrollDown();
